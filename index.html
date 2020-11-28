@@ -1,0 +1,198 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listing Video</title>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
+
+    <style>
+
+        /* .holder {
+        width: 560;
+        height: 315px;
+        position: relative;
+        } */
+
+        .frame {
+        width: 100%;
+        height: 100%;
+        }
+
+        .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 315px;
+        cursor: pointer;
+        }
+    </style>
+
+
+
+
+    <script src="assets/js/jquery-2.1.3.min.js" ></script> 
+    <script src="assets/js/bootstrap.min.js" ></script>
+    <script src="assets/js/sweetalert2.min.js" defer></script>
+
+</head>
+<body>
+    <div class="" style="box-shadow:0 1px 6px 0 rgba(32, 33, 36, 0.28);">
+        <img src="http://yt3.ggpht.com/ytc/AAUvwnjJxIJ2Eww-d-V_oOqAEwJJiBy7B7avuX8nfWJ0=s176-c-k-c0x00ffffff-no-rj-mo" alt="Dorsen Indie"  width="" height="70" data-atf="1">
+    </div>
+
+        <div class="row m-0">
+            <div class="col-md-6 pt-3 pb-3">
+                <div class="">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe width="100%" height="auto" src="https://www.youtube.com/embed/ailJzaBWzrU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" ></iframe>
+                        <div class="overlay trigger" src="https://www.youtube.com/embed/ailJzaBWzrU" data-val="ailJzaBWzrU" data-target="#videoModal" data-toggle="modal"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6  pt-3 pb-3">
+                <div class="">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe width="100%" height="auto" src="https://www.youtube.com/embed/d95PPykB2vE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" ></iframe>
+                        <div class="overlay trigger" src="https://www.youtube.com/embed/d95PPykB2vE" data-val="d95PPykB2vE" data-target="#videoModal" data-toggle="modal"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6  pt-3 pb-3">
+                <div class="">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/FUiu-cdu6mA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <div class="overlay trigger" data-val="FUiu-cdu6mA" data-target="#videoModal" data-toggle="modal"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6  pt-3 pb-3">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/Nj4891uXAk4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="overlay trigger" data-val="Nj4891uXAk4" data-target="#videoModal" data-toggle="modal"></div>
+                </div>
+            </div>
+        </div>
+
+
+    
+    <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <button type="button" class="close btn-round btn-primary" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <div id="ytplayer" class="embed-responsive-item" allowfullscreen></div>
+                <!-- <iframe class="embed-responsive-item" src="" allowfullscreen></iframe> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="codeModal" tabindex="-1" role="dialog" aria-labelledby="codeModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="codeModalBody">
+                <button type="button" class="close btn-round btn-primary" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+               
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            autoPlayYouTubeModal();
+        });
+    </script>
+
+    <script>
+        // Load the IFrame Player API code asynchronously.
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/player_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    
+        // Replace the 'ytplayer' element with an <iframe> and
+        // YouTube player after the API code downloads.
+        var player;
+        function onYouTubePlayerAPIReady(id) {
+            player = new YT.Player('ytplayer', {
+                height: '300',
+                width: '640',
+                playerVars: { 'controls': 0 },
+                videoId: id,
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }           
+            });
+        }
+
+        //Modal Video
+        function autoPlayYouTubeModal() {
+            var trigger = $('.trigger');
+            trigger.click(function(e) {
+                e.preventDefault();
+                var theModal = $(this).data("target");
+                var videoSRC = $(this).attr("src");
+                var videoId = $(this).data("val");
+                var videoSRCauto = videoSRC + "?autoplay=1&controls=0";
+
+                player.loadVideoById(videoId, 0, "default");
+
+                //$(theModal + ' iframe').attr('src', videoSRCauto);
+                $(theModal).on('hidden.bs.modal', function(e) {
+                    player.stopVideo();
+                    // $(theModal + ' iframe').attr('src', '');
+                });
+            });
+        };
+
+        // autoplay video
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
+
+        // when video ends
+        function onPlayerStateChange(event) {        
+            if(event.data === 0) {            
+                $('#videoModal').modal("toggle"); 
+
+                var code = makeid(7);
+                Swal.fire({
+                    title: 'Terimaksih Telah Menyaksikan Video Berikut',
+                    html: `<div> Kode Undian : <span class="font-weight-bold text-danger"> ${code} </span> </div> <div> Silahkan Screen Shot dan Upload </div>`,
+                    icon: 'success',
+                    //showCancelButton: true,
+                    confirmButtonColor: '#38A169',
+                    //cancelButtonColor: '#d33',
+                    confirmButtonText: 'OK'
+                })
+            }
+        }
+
+        function makeid(length) {
+            var result           = '';
+            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+
+console.log(makeid(5));
+        
+    </script>
+
+
+  
+</body>
+</html>
